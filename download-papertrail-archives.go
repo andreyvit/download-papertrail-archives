@@ -21,7 +21,7 @@ var (
 	timeout   = flag.Duration("timeout", 30*time.Second, "timeout for HTTP operations")
 	quiet     = flag.Bool("q", false, "quiet operation (don't print anything)")
 
-	until, since Date
+	before, since Date
 )
 
 const (
@@ -29,7 +29,7 @@ const (
 )
 
 func main() {
-	flag.Var(&until, "until", "only download logs on or before this date in YYYY-MM-DD format")
+	flag.Var(&before, "before", "only download logs before (NOT including) this date in YYYY-MM-DD format")
 	flag.Var(&since, "since", "only download logs on or after this date in YYYY-MM-DD format")
 	log.SetFlags(0)
 	flag.Parse()
@@ -77,7 +77,7 @@ func main() {
 		if !since.IsZero() && a.Filename < since.String() {
 			stats.Skipped++
 		}
-		if !until.IsZero() && a.Filename > until.String() {
+		if !before.IsZero() && a.Filename >= before.String() {
 			stats.Skipped++
 		}
 
@@ -164,7 +164,7 @@ var (
 type Date string
 
 func FromTime(tm time.Time) Date {
-	return Date(tm.Format("2006-01-02"))
+	return Date(tm.UTC().Format("2006-01-02"))
 }
 func Today() Date {
 	return FromTime(time.Now())

@@ -27,7 +27,7 @@ where:
 
 * `-since <YYYY-MM-DD>` only downloads logs on or after this date
 
-* `-until <YYYY-MM-DD>` only downloads logs on or before this date
+* `-before <YYYY-MM-DD>` only downloads logs before this date (NOT including the date), accepts `today` as a value
 
 * `-timeout <DURATION>` sets timeout for HTTP operations (default `30s`)
 
