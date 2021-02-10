@@ -76,9 +76,11 @@ func main() {
 
 		if !since.IsZero() && a.Filename < since.String() {
 			stats.Skipped++
+			continue
 		}
 		if !before.IsZero() && a.Filename >= before.String() {
 			stats.Skipped++
+			continue
 		}
 
 		if _, err := os.Stat(fn); err == nil {
